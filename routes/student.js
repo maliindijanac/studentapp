@@ -5,13 +5,13 @@ var mymongo = require ('./mymongo.js');
 
 /* GET movies listing. */
 router.get('/', function(req, res, next) {
-  mymongo.db.movies.find({}, function (err, movies) {
-    res.send(movies);
+  mymongo.db.student.find({}, function (err, students) {
+    res.send(students);
   });
 });
 
 router.get('/:id', function(req, res, next) {
-  mymongo.db.movies.findOne ({id:req.params.id}, function (err, result) {
+  mymongo.db.student.findOne ({id:req.params.id}, function (err, result) {
     if (err) {
         res.send (error);
     }
@@ -24,9 +24,9 @@ router.get('/:id', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  var movie = new mymongo.movies (req.body.id, req.body.name,req.body.year, req.body.category_id,  req.body.amount_earned);
+  var student = new mymongo.student (req.body.id, req.body.ime,req.body.prezime, req.body.mentor_id,  req.body.odsijek_id);
 
-  mymongo.db.movies.save (movie, function (err, result) {
+  mymongo.db.student.save (student, function (err, result) {
     if (err) {
         res.send (error);
     }
@@ -39,12 +39,13 @@ router.post('/', function(req, res, next) {
 });
 
 router.put('/:id', function(req, res, next) {
-  var movies = new mymongo.movies (req.body.id, req.body.name, req.body.year,req.body.category_id,  req.body.amount_earned);
+  var student = new mymongo.student (req.body.id, req.body.ime,req.body.prezime, req.body.mentor_id,  req.body.odsijek_id);
 
-  mymongo.db.movies.findAndModify({
+
+  mymongo.db.student.findAndModify({
 
 	  query: {id:req.params.id},
-      update: {$set: movies}
+      update: {$set: student}
  },
   function (err, result) {
     if (err) {
@@ -59,7 +60,7 @@ router.put('/:id', function(req, res, next) {
 });
 
 router.delete('/:id', function(req, res, next) {
-  mymongo.db.movies.remove({id:req.params.id}, function (err, result) {
+  mymongo.db.student.remove({id:req.params.id}, function (err, result) {
     if (err) {
         res.send (error);
     }

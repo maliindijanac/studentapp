@@ -11,27 +11,27 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <div ng-app="movies" ng-controller="appctrl">
-        <button type="button" class="btn btn-success center-block" ng-click="editMovie()">Add</button>
+    <div ng-app="student" ng-controller="appctrl">
+        <button type="button" class="btn btn-success center-block" ng-click="editStudent()">Add</button>
         <br> 
   
     <table class="table table-striped">
         <tr>
           <th>ID</th>
-          <th>Name</th> 
-          <th>Category ID</th>
-          <th>Year</th>
-          <th>Amount earned</th>
+          <th>Ime</th> 
+          <th>Prezime</th>
+          <th>Mentor ID</th>
+          <th>Odsijek ID</th>
         </tr>
-        <tr ng-repeat="movie in movies">
-          <td>{{movie.id}}</td>
-          <td>{{movie.name}}</td>
-          <td>{{movie.category_id}}</td>
-          <td>{{movie.year}}</td>
-          <td>{{movie.amount_earned}}</td>
+        <tr ng-repeat="student in students">
+          <td>{{student.id}}</td>
+          <td>{{student.ime}}</td>
+          <td>{{student.prezime}}</td>
+          <td>{{student.mentor_id}}</td>
+          <td>{{student.odsijek_id}}</td>
           <td>
-              <button type="button" class="btn btn-danger" ng-click="confirmdelete(movie.id)">Delete</button>
-              <button type="button" class="btn btn-primary" ng-click="editMovie(movie.id)">Edit</button>                                           
+              <button type="button" class="btn btn-danger" ng-click="confirmdelete(student.id)">Delete</button>
+              <button type="button" class="btn btn-primary" ng-click="editStudent(student.id)">Edit</button>                                           
           </td>
           </tr>
 

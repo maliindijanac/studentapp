@@ -1,12 +1,12 @@
-var app = angular.module('movies',  ['ui.bootstrap']);
+var app = angular.module('student',  ['ui.bootstrap']);
 app.controller('appctrl', function($scope, $rootScope,$http,$uibModal) {
 
-    loadMovies();
-    loadCategories(); 
+    loadStudent();
+    
 
-    function loadMovies() {
-        $http.get("/rest/movies").then(function(response) {    
-         $scope.movies = response.data;
+    function loadStudent() {
+        $http.get("/rest/student").then(function(response) {    
+         $scope.students = response.data;
         });
     };
 
@@ -17,36 +17,36 @@ app.controller('appctrl', function($scope, $rootScope,$http,$uibModal) {
 
     };
 
-    $scope.deleteMovie = function (id) {
+    $scope.deleteStudent= function (id) {
         console.log(id);
-        $http.delete("/rest/movies/"+ id).then(function(response) {    
-        loadMovies();
+        $http.delete("/rest/student/"+ id).then(function(response) {    
+        loadStudent();
         });
     };
 
 
-    $scope.saveMovie = function (data) {
+    $scope.saveStudent = function (data) {
         vdata = {id :data.id, 
-                 name: data.name,
-                 year: data.year,
-                 category_id: data.category_id,
-                 amount_earned: data.amount_earned};
-        $http.post("/rest/movies",JSON.stringify(vdata)).then(function(response) {
+                 ime: data.ime,
+                 prezime: data.prezime,
+                 mentor_id: data.mentor_id,
+                 odsijek_id: data.odsijek_id};
+        $http.post("/rest/student",JSON.stringify(vdata)).then(function(response) {
 	
-           loadMovies();
+           loadStudent();
         });
     };
 
-    $scope.updateMovie = function (id,data) {
+    $scope.updateStudent = function (id,data) {
       vdata = {id :data.id, 
-               name: data.name,
-               year: data.year,
-               category_id: data.category_id,
-               amount_earned: data.amount_earned};
+        ime: data.ime,
+        prezime: data.prezime,
+        mentor_id: data.mentor_id,
+        odsijek_id: data.odsijek_id};
       
-               $http.put("/rest/movies/"+id,JSON.stringify(vdata)).then(function(response) {
+        $http.put("/rest/student/"+id,JSON.stringify(vdata)).then(function(response) {
 
-         loadMovies();
+         loadStudent();
       });
    };
 
@@ -66,7 +66,7 @@ app.controller('appctrl', function($scope, $rootScope,$http,$uibModal) {
     
         modalInstance.result.then(function () {
             console.log ("Confirm"+ id);
-              $scope.deleteMovie(id);
+              $scope.deleteStudent(id);
 
     
         }, function () {
@@ -75,7 +75,8 @@ app.controller('appctrl', function($scope, $rootScope,$http,$uibModal) {
         
         $rootScope.modalInstance = modalInstance;
       };
-      $scope.editMovie = function (id) {
+
+      $scope.editStudent = function (id) {
         console.log('edit modal');
 
         modalInstance = $uibModal.open({
@@ -84,18 +85,18 @@ app.controller('appctrl', function($scope, $rootScope,$http,$uibModal) {
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
-            templateUrl: 'editModal.html', 
+            templateUrl: 'editStudent.html', 
             backdrop : 'static',
             resolve: {
-              movieid : function () { return id}
+              studentid : function () { return id}
             }     
         });
     
         modalInstance.result.then(function (data) {
             if (data.old_id) {
-              $scope.updateMovie(data.old_id,data);
+              $scope.updateStudent(data.old_id,data);
             } else {
-              $scope.saveMovie(data);
+              $scope.saveStudent(data);
             }
 
     
@@ -116,31 +117,34 @@ app.controller('appctrl', function($scope, $rootScope,$http,$uibModal) {
       $uibModalInstance.dismiss('cancel');
     };
 
-  }).controller('editInstanceCtrl', function ($uibModalInstance,$http, movieid) {
+  }).controller('editInstanceCtrl', function ($uibModalInstance,$http, studentid) {
     var $ctrl=this;
     
-    if (movieid) {
-      $http.get("/rest/movies/"+movieid).then(function(response) {    
+    if (studentid) {
+      $http.get("/rest/student/"+studentid).then(function(response) {    
          $ctrl.id= response.data.id;
-         $ctrl.name= response.data.name;
-         $ctrl.year= response.data.year;
-         $ctrl.category_id= response.data.category_id;
-         $ctrl.amount_earned= response.data.amount_earned;
+         $ctrl.ime= response.data.ime;
+         $ctrl.prezime= response.data.prezime;
+         $ctrl.mentor_id= response.data.mentor_id;
+         $ctrl.odsijek_id= response.data.odsijek_id;
        });
     }
     
-    $http.get("/rest/categories").then(function(response) {    
-        $ctrl.categories = response.data;
+    $http.get("/rest/mentor").then(function(response) {    
+        $ctrl.mentori = response.data;
     });
+    $http.get("/rest/odsijek").then(function(response) {    
+      $ctrl.odsjeci = response.data;
+  });
 
     this.ok = function () {
       $uibModalInstance.close({
           id:$ctrl.id,
-          name:$ctrl.name,
-          year:$ctrl.year,
-          category_id:$ctrl.category_id,
-          amount_earned:$ctrl.amount_earned,
-          old_id : movieid
+          ime:$ctrl.ime,
+          prezime:$ctrl.prezime,
+          mentor_id:$ctrl.mentor_id,
+          odsijek_id:$ctrl.odsijek_id,
+          old_id : studentid
       });
     };
   

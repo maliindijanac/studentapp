@@ -4,7 +4,7 @@ var mymongo = require ("./mymongo")
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  mymongo.db.categories.find ({}, function (err, result) {
+  mymongo.db.mentor.find ({}, function (err, result) {
       if (err) {
           res.send (error);
       }

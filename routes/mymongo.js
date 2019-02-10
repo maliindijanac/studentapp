@@ -1,18 +1,22 @@
 var mongojs = require('mongojs');
 
-var db = mongojs ('localhost:27017/movies', ['movies','categories']);
+var db = mongojs ('localhost:27017/fakultet', ['student','mentor','odsijek']);
 
-function movies (id,name, year, category_id, amount_earned) {
+function student (id, ime , prezime, mentor_id,odsijek_id) {
   this.id = id;
-  this.name = name;
-  this.year = year;
-  this.category_id = category_id;
-  this.amount_earned = amount_earned;
+  this.ime = ime;
+  this.prezime = prezime;
+  this.odsijek_id = odsijek_id;
+  this.mentor_id= mentor_id;
 };
 
-function categories (id, name) {
+function mentor (id, ime) {
   this.id = id;
-  this.name= name;
+  this.ime= ime;
 };
 
-module.exports = {db, movies, categories};
+function odsijek (id, naziv) {
+  this.id = id;
+  this.naziv= naziv;
+};
+module.exports = {db, student, mentor, odsijek};
